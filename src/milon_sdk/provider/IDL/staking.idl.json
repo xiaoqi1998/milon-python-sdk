@@ -1,0 +1,1361 @@
+{
+  "metadata": {
+    "app_id": 3,
+    "name": "staking",
+    "description": "Milon staking app IDL"
+  },
+  "instructions": [
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "nonce",
+          "role": "input",
+          "type": "u64"
+        },
+        {
+          "name": "stake_asset",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "reward_asset",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "cycle_config",
+          "role": "input",
+          "type": "PoolCycleConfig"
+        },
+        {
+          "name": "reward_config",
+          "role": "input",
+          "type": "PoolRewardConfig"
+        }
+      ],
+      "discriminator": 52671,
+      "handler": "create_pool",
+      "kind": "entry",
+      "name": "CreatePool",
+      "returns": {
+        "type": "PoolId"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        },
+        {
+          "name": "amount",
+          "role": "input",
+          "type": "u64"
+        }
+      ],
+      "discriminator": 65380,
+      "handler": "stake_into_pool",
+      "kind": "entry",
+      "name": "StakeIntoPool",
+      "returns": {
+        "type": "B256"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "stake_id",
+          "role": "input",
+          "type": "B256"
+        }
+      ],
+      "discriminator": 27835,
+      "handler": "cancel_stake_by_id",
+      "kind": "entry",
+      "name": "CancelStakeById"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "stake_id",
+          "role": "input",
+          "type": "B256"
+        },
+        {
+          "name": "shares",
+          "role": "input",
+          "type": "u64"
+        }
+      ],
+      "discriminator": 27517,
+      "handler": "request_unstake_by_id",
+      "kind": "entry",
+      "name": "RequestUnstakeById"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "stake_id",
+          "role": "input",
+          "type": "B256"
+        }
+      ],
+      "discriminator": 44602,
+      "handler": "cancel_unstake_by_id",
+      "kind": "entry",
+      "name": "CancelUnstakeById"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "stake_id",
+          "role": "input",
+          "type": "B256"
+        }
+      ],
+      "discriminator": 50003,
+      "handler": "claim_rewards_by_id",
+      "kind": "entry",
+      "name": "ClaimRewardsById",
+      "returns": {
+        "type": "u64"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "funder",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        },
+        {
+          "name": "amount",
+          "role": "input",
+          "type": "u64"
+        }
+      ],
+      "discriminator": 61672,
+      "handler": "accrue_pool_reward",
+      "kind": "entry",
+      "name": "AccruePoolReward"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        },
+        {
+          "name": "config",
+          "role": "input",
+          "type": "PoolRewardConfig"
+        }
+      ],
+      "discriminator": 37925,
+      "handler": "request_pool_reward_config",
+      "kind": "entry",
+      "name": "RequestPoolRewardConfig"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 17449,
+      "handler": "claim_pool_commission",
+      "kind": "entry",
+      "name": "ClaimPoolCommission",
+      "returns": {
+        "type": "u64"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 55077,
+      "handler": "pause_pool",
+      "kind": "entry",
+      "name": "PausePool"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 55138,
+      "handler": "resume_pool",
+      "kind": "entry",
+      "name": "ResumePool"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 22554,
+      "handler": "freeze_pool",
+      "kind": "entry",
+      "name": "FreezePool"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 43503,
+      "handler": "unfreeze_pool",
+      "kind": "entry",
+      "name": "UnfreezePool"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 40303,
+      "handler": "close_pool",
+      "kind": "entry",
+      "name": "ClosePool"
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 51163,
+      "handler": "sweep_pool_residual",
+      "kind": "entry",
+      "name": "SweepPoolResidual",
+      "returns": {
+        "type": "u64"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "stake_asset",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "reward_asset",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "reward_per_validator",
+          "role": "input",
+          "type": "u64"
+        }
+      ],
+      "discriminator": 48796,
+      "handler": "configure_validator_reward_policy",
+      "kind": "entry",
+      "name": "ConfigureValidatorRewardPolicy"
+    },
+    {
+      "args": [
+        {
+          "name": "funder",
+          "role": "signer",
+          "type": "Signer"
+        },
+        {
+          "name": "stake_asset",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "reward_asset",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "amount",
+          "role": "input",
+          "type": "u64"
+        }
+      ],
+      "discriminator": 55411,
+      "handler": "fund_validator_reward_policy",
+      "kind": "entry",
+      "name": "FundValidatorRewardPolicy"
+    },
+    {
+      "args": [
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 60310,
+      "handler": "pool",
+      "kind": "view",
+      "name": "Pool",
+      "returns": {
+        "type": "Pool"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "stake_id",
+          "role": "input",
+          "type": "B256"
+        }
+      ],
+      "discriminator": 56858,
+      "handler": "stake_by_id",
+      "kind": "view",
+      "name": "StakeById",
+      "returns": {
+        "type": "Stake"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 309,
+      "handler": "pool_treasury_balance",
+      "kind": "view",
+      "name": "PoolTreasuryBalance",
+      "returns": {
+        "type": "u64"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 28539,
+      "handler": "stake_ids",
+      "kind": "view",
+      "name": "StakeIds",
+      "returns": {
+        "type": "vec<B256>"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 8203,
+      "handler": "stake_position_by_pool",
+      "kind": "view",
+      "name": "StakePositionByPool",
+      "returns": {
+        "type": "PoolStakePosition"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "owner",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 64591,
+      "handler": "pending_stakes",
+      "kind": "view",
+      "name": "PendingStakes",
+      "returns": {
+        "type": "vec<B256>"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 32423,
+      "handler": "total_shares",
+      "kind": "view",
+      "name": "TotalShares",
+      "returns": {
+        "type": "u64"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 11487,
+      "handler": "total_stake",
+      "kind": "view",
+      "name": "TotalStake",
+      "returns": {
+        "type": "u64"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "pool_id",
+          "role": "input",
+          "type": "PoolId"
+        }
+      ],
+      "discriminator": 20540,
+      "handler": "reward_index",
+      "kind": "view",
+      "name": "RewardIndex",
+      "returns": {
+        "type": "u128"
+      }
+    },
+    {
+      "args": [
+        {
+          "name": "stake_asset",
+          "role": "input",
+          "type": "Address"
+        },
+        {
+          "name": "reward_asset",
+          "role": "input",
+          "type": "Address"
+        }
+      ],
+      "discriminator": 16051,
+      "handler": "validator_reward_policy",
+      "kind": "view",
+      "name": "ValidatorRewardPolicy",
+      "returns": {
+        "type": "ValidatorRewardPolicy"
+      }
+    },
+    {
+      "args": [],
+      "discriminator": 51436,
+      "handler": "validator_reward_policy_configured",
+      "kind": "view",
+      "name": "ValidatorRewardPolicyConfigured",
+      "returns": {
+        "type": "bool"
+      }
+    }
+  ],
+  "types": [
+    {
+      "kind": "enum",
+      "name": "PoolStatus",
+      "typeTag": 17680148924642691372,
+      "variants": [
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Open"
+        },
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Paused"
+        },
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Frozen"
+        },
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Closing"
+        },
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Drained"
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "SlashingMode",
+      "typeTag": 6613645985445293540,
+      "variants": [
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Disabled"
+        },
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "System"
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "CycleBasis",
+      "typeTag": 745494636739994664,
+      "variants": [
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Epoch"
+        },
+        {
+          "fields": [
+            {
+              "name": "anchor_block",
+              "type": "u64"
+            },
+            {
+              "name": "length_blocks",
+              "type": "u64"
+            }
+          ],
+          "kind": "struct",
+          "name": "Block"
+        },
+        {
+          "fields": [
+            {
+              "name": "anchor_timestamp_ms",
+              "type": "u64"
+            },
+            {
+              "name": "length_ms",
+              "type": "u64"
+            }
+          ],
+          "kind": "struct",
+          "name": "Timestamp"
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "name": "basis",
+          "type": "CycleBasis"
+        },
+        {
+          "name": "stake_activation_delay",
+          "type": "u64"
+        },
+        {
+          "name": "unstake_activation_delay",
+          "type": "u64"
+        },
+        {
+          "name": "reward_distribution_delay",
+          "type": "u64"
+        },
+        {
+          "name": "commission_change_delay",
+          "type": "u64"
+        }
+      ],
+      "kind": "struct",
+      "name": "PoolCycleConfig",
+      "typeTag": 5284237065249288842
+    },
+    {
+      "fields": [
+        {
+          "name": "commission_rate_bps",
+          "type": "u64"
+        },
+        {
+          "name": "commission_recipient",
+          "type": "Address"
+        }
+      ],
+      "kind": "struct",
+      "name": "PoolRewardConfig",
+      "typeTag": 1255043119785956927
+    },
+    {
+      "fields": [
+        {
+          "name": "config",
+          "type": "PoolRewardConfig"
+        },
+        {
+          "name": "requested_cycle",
+          "type": "u64"
+        },
+        {
+          "name": "effective_cycle",
+          "type": "u64"
+        }
+      ],
+      "kind": "struct",
+      "name": "PendingRewardConfig",
+      "typeTag": 865817419697605902
+    },
+    {
+      "fields": [
+        {
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "name": "owner",
+          "type": "Address"
+        },
+        {
+          "name": "stake_asset",
+          "type": "Address"
+        },
+        {
+          "name": "reward_asset",
+          "type": "Address"
+        },
+        {
+          "name": "status",
+          "type": "PoolStatus"
+        },
+        {
+          "name": "slashing_mode",
+          "type": "SlashingMode"
+        },
+        {
+          "name": "cycle_config",
+          "type": "PoolCycleConfig"
+        },
+        {
+          "name": "total_shares",
+          "type": "u64"
+        },
+        {
+          "name": "principal_assets",
+          "type": "u64"
+        },
+        {
+          "name": "held_principal",
+          "type": "u64"
+        },
+        {
+          "name": "reward_index",
+          "type": "u128"
+        },
+        {
+          "name": "scaled_reward_remainder",
+          "type": "u128"
+        },
+        {
+          "name": "reward_config",
+          "type": "PoolRewardConfig"
+        },
+        {
+          "name": "pending_reward_config",
+          "type": "option<PendingRewardConfig>"
+        },
+        {
+          "name": "claimable_commission",
+          "type": "u64"
+        },
+        {
+          "name": "reward_liability",
+          "type": "u64"
+        },
+        {
+          "name": "settlement_cursor",
+          "type": "u64"
+        },
+        {
+          "name": "pending_stake_count",
+          "type": "u64"
+        },
+        {
+          "name": "pending_unstake_count",
+          "type": "u64"
+        },
+        {
+          "name": "closing_cycle",
+          "type": "option<u64>"
+        },
+        {
+          "name": "scheduled_cycles",
+          "type": "vec<u64>"
+        }
+      ],
+      "kind": "struct",
+      "name": "Pool",
+      "typeTag": 9857364790664378562
+    },
+    {
+      "kind": "enum",
+      "name": "StakeStatus",
+      "typeTag": 6400687400352756128,
+      "variants": [
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Pending"
+        },
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Active"
+        },
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Closed"
+        },
+        {
+          "fields": [],
+          "kind": "unit",
+          "name": "Cancelled"
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "submitted_cycle",
+          "type": "u64"
+        },
+        {
+          "name": "effective_cycle",
+          "type": "u64"
+        }
+      ],
+      "kind": "struct",
+      "name": "PendingUnstake",
+      "typeTag": 18398151268513761442
+    },
+    {
+      "fields": [
+        {
+          "name": "stake_id",
+          "type": "B256"
+        },
+        {
+          "name": "owner",
+          "type": "Address"
+        },
+        {
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "principal",
+          "type": "u64"
+        },
+        {
+          "name": "reward_debt",
+          "type": "u128"
+        },
+        {
+          "name": "claimable_rewards",
+          "type": "u64"
+        },
+        {
+          "name": "submitted_cycle",
+          "type": "u64"
+        },
+        {
+          "name": "effective_cycle",
+          "type": "u64"
+        },
+        {
+          "name": "status",
+          "type": "StakeStatus"
+        },
+        {
+          "name": "pending_unstake",
+          "type": "option<PendingUnstake>"
+        }
+      ],
+      "kind": "struct",
+      "name": "Stake",
+      "typeTag": 1411630656601401662
+    },
+    {
+      "fields": [
+        {
+          "name": "owner",
+          "type": "Address"
+        },
+        {
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "name": "shares",
+          "type": "u64"
+        },
+        {
+          "name": "reward_debt",
+          "type": "u128"
+        },
+        {
+          "name": "claimable_rewards",
+          "type": "u64"
+        }
+      ],
+      "kind": "struct",
+      "name": "PoolStakePosition",
+      "typeTag": 5641062029386042771
+    },
+    {
+      "fields": [
+        {
+          "name": "stake_shares",
+          "type": "u64"
+        },
+        {
+          "name": "unstake_shares",
+          "type": "u64"
+        },
+        {
+          "name": "reward",
+          "type": "u64"
+        }
+      ],
+      "kind": "struct",
+      "name": "CycleBucket",
+      "typeTag": 11951289580227596372
+    },
+    {
+      "fields": [
+        {
+          "name": "written",
+          "type": "bool"
+        },
+        {
+          "name": "reward_index",
+          "type": "u128"
+        }
+      ],
+      "kind": "struct",
+      "name": "CycleRecord",
+      "typeTag": 3289233420045365543
+    },
+    {
+      "fields": [
+        {
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "effective_cycle",
+          "type": "u64"
+        },
+        {
+          "name": "evidence_id",
+          "type": "B256"
+        }
+      ],
+      "kind": "struct",
+      "name": "SlashReceipt",
+      "typeTag": 11645205427099173315
+    },
+    {
+      "fields": [
+        {
+          "name": "ids",
+          "type": "vec<B256>"
+        }
+      ],
+      "kind": "struct",
+      "name": "StakeIds",
+      "typeTag": 15418512581460945264
+    },
+    {
+      "fields": [
+        {
+          "name": "stake_asset",
+          "type": "Address"
+        },
+        {
+          "name": "reward_asset",
+          "type": "Address"
+        },
+        {
+          "name": "reward_per_validator",
+          "type": "u64"
+        },
+        {
+          "name": "available",
+          "type": "u64"
+        }
+      ],
+      "kind": "struct",
+      "name": "ValidatorRewardPolicy",
+      "typeTag": 11159178674765679005
+    },
+    {
+      "fields": [
+        {
+          "name": "assets",
+          "type": "vec<tuple<Address,Address>>"
+        }
+      ],
+      "kind": "struct",
+      "name": "PolicyAssets",
+      "typeTag": 5099006009109120273
+    },
+    {
+      "fields": [
+        {
+          "name": "initialized",
+          "type": "bool"
+        },
+        {
+          "name": "last_settled_epoch",
+          "type": "u64"
+        }
+      ],
+      "kind": "struct",
+      "name": "RewardCursor",
+      "typeTag": 3176201935640261171
+    },
+    {
+      "kind": "builtin",
+      "name": "Address",
+      "typeTag": 17438174819379414968
+    },
+    {
+      "kind": "builtin",
+      "name": "B256",
+      "typeTag": 12016729314829497160
+    },
+    {
+      "kind": "builtin",
+      "name": "PoolId",
+      "typeTag": 10033863623731171282
+    },
+    {
+      "kind": "builtin",
+      "name": "bool",
+      "typeTag": 14785269867199075517
+    },
+    {
+      "kind": "builtin",
+      "name": "u128",
+      "typeTag": 10698497612269247729
+    },
+    {
+      "kind": "builtin",
+      "name": "u64",
+      "typeTag": 5563585020063213298
+    }
+  ],
+  "resources": [
+    {
+      "name": "_CorePool",
+      "type": "Pool",
+      "typeTag": 9857364790664378562
+    },
+    {
+      "name": "_CoreStake",
+      "type": "Stake",
+      "typeTag": 1411630656601401662
+    },
+    {
+      "name": "_CoreStakeIdsByOwner",
+      "type": "StakeIds",
+      "typeTag": 15418512581460945264
+    },
+    {
+      "name": "_CoreStakeIdsByPool",
+      "type": "StakeIds",
+      "typeTag": 15418512581460945264
+    },
+    {
+      "name": "_CoreSlashEvidence",
+      "type": "bool",
+      "typeTag": 14785269867199075517
+    },
+    {
+      "name": "_CoreCycleBucket",
+      "type": "CycleBucket",
+      "typeTag": 11951289580227596372
+    },
+    {
+      "name": "_CoreCycleRecord",
+      "type": "CycleRecord",
+      "typeTag": 3289233420045365543
+    },
+    {
+      "name": "_ValidatorRewardPolicy",
+      "type": "ValidatorRewardPolicy",
+      "typeTag": 11159178674765679005
+    },
+    {
+      "name": "_PolicyAssets",
+      "type": "PolicyAssets",
+      "typeTag": 5099006009109120273
+    },
+    {
+      "name": "_RewardCursor",
+      "type": "RewardCursor",
+      "typeTag": 3176201935640261171
+    }
+  ],
+  "constants": [
+    {
+      "name": "REWARD_INDEX_SCALE",
+      "type": "u128",
+      "value": 1000000000000
+    },
+    {
+      "name": "MAX_COMMISSION_RATE_BPS",
+      "type": "u64",
+      "value": 10000
+    }
+  ],
+  "events": [
+    {
+      "fields": [
+        {
+          "indexed": true,
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "indexed": true,
+          "name": "owner",
+          "type": "Address"
+        },
+        {
+          "indexed": false,
+          "name": "stake_id",
+          "type": "B256"
+        },
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "indexed": false,
+          "name": "effective_cycle",
+          "type": "u64"
+        }
+      ],
+      "name": "StakeCreated",
+      "typeTag": 7761322164556565014
+    },
+    {
+      "fields": [
+        {
+          "indexed": true,
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "indexed": false,
+          "name": "old_config",
+          "type": "PoolRewardConfig"
+        },
+        {
+          "indexed": false,
+          "name": "pending_config",
+          "type": "PoolRewardConfig"
+        },
+        {
+          "indexed": false,
+          "name": "effective_cycle",
+          "type": "u64"
+        }
+      ],
+      "name": "PoolRewardConfigChangeRequested",
+      "typeTag": 5948611434188661073
+    },
+    {
+      "fields": [
+        {
+          "indexed": true,
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "indexed": false,
+          "name": "recipient",
+          "type": "Address"
+        },
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "name": "PoolCommissionDistributed",
+      "typeTag": 12472100352688581512
+    },
+    {
+      "fields": [
+        {
+          "indexed": true,
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "indexed": false,
+          "name": "old_config",
+          "type": "PoolRewardConfig"
+        },
+        {
+          "indexed": false,
+          "name": "new_config",
+          "type": "PoolRewardConfig"
+        },
+        {
+          "indexed": false,
+          "name": "effective_cycle",
+          "type": "u64"
+        }
+      ],
+      "name": "PoolRewardConfigChanged",
+      "typeTag": 5005543581933784081
+    },
+    {
+      "fields": [
+        {
+          "indexed": true,
+          "name": "pool_id",
+          "type": "PoolId"
+        }
+      ],
+      "name": "PoolDrained",
+      "typeTag": 18352118988445275085
+    },
+    {
+      "fields": [
+        {
+          "indexed": true,
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "indexed": false,
+          "name": "recipient",
+          "type": "Address"
+        },
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "u64"
+        }
+      ],
+      "name": "PoolResidualSwept",
+      "typeTag": 249705490704053362
+    },
+    {
+      "fields": [
+        {
+          "indexed": true,
+          "name": "pool_id",
+          "type": "PoolId"
+        },
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "indexed": false,
+          "name": "effective_cycle",
+          "type": "u64"
+        },
+        {
+          "indexed": false,
+          "name": "evidence_id",
+          "type": "B256"
+        }
+      ],
+      "name": "PoolSlashed",
+      "typeTag": 11033796372910543802
+    }
+  ],
+  "errors": [
+    {
+      "code": 768,
+      "message": "Principal custody backing mismatch: liability {0}, backing {1}",
+      "name": "PrincipalVaultBackingMismatch"
+    },
+    {
+      "code": 769,
+      "message": "Invalid parameters: {0}",
+      "name": "InvalidParameters"
+    },
+    {
+      "code": 770,
+      "message": "Reward treasury backing mismatch: liability {0}, backing {1}",
+      "name": "RewardTreasuryBackingMismatch"
+    },
+    {
+      "code": 771,
+      "message": "Staking invariant violation: {0}",
+      "name": "InvariantViolation"
+    },
+    {
+      "code": 772,
+      "message": "protocol epoch clock is not initialized",
+      "name": "EpochClockNotReady"
+    },
+    {
+      "code": 773,
+      "message": "Transparent TokenError",
+      "name": "TokenError",
+      "transparent": true
+    },
+    {
+      "code": 774,
+      "message": "Transparent ContextError",
+      "name": "ContextError",
+      "transparent": true
+    }
+  ]
+}
